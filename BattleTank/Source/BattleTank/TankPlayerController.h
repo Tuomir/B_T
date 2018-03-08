@@ -24,4 +24,6 @@ public:
 private:
 
 	ATank * GetControlledTank() const;
+
+	void AimTowardsCrossHair();
 };
