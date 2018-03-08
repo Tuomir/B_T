@@ -39,7 +39,7 @@ void ATankPlayerController::AimTowardsCrossHair()
 	FVector OutHitLocation; // Out parameter
 	if (GetSightRayHitLocation(OutHitLocation)) // Side effect: line tracing
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Hitlocation: %s"), *OutHitLocation.ToString())
+		UE_LOG(LogTemp, Warning, TEXT("Hitlocation: %s"), *OutHitLocation.ToString())
 	}
 }
 
@@ -53,19 +53,12 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation) con
 	FVector LookDirection;
 
 	if (GetLookDirection(ScreenLocation, LookDirection))
-	{
-		// UE_LOG(LogTemp, Warning, TEXT("Crosshair direction: %s"), *LookDirection.ToString())
-
-		// Line trace along LookDirection (up to a max range) and see what we hit
-		
-
-		if (GetLookVectorHitLocation(LookDirection, OutHitLocation))
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Hit location: %s"), *OutHitLocation.ToString())
-		}
+	{	
+		// Line trace along LookDirection and see what gets hit
+		return GetLookVectorHitLocation(LookDirection, OutHitLocation);
 	}
 
-	return true;
+	return false;
 }
 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector & OutLookDirection) const
@@ -92,8 +85,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		HitLocation = FVector(0.0f);
 		return true;
 	}
-
-	return false;
 }
 
 
