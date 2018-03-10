@@ -2,6 +2,23 @@
 
 #include "TankAIController.h"
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (GetPlayerTank())
+	{
+		// TODO move towards player tank
+
+		// Get location of player tank
+		// Aim at player tank
+		auto AimLocation = GetPlayerTank()->GetActorLocation();
+		GetControlledTank()->AimAt(AimLocation);
+
+		// TODO fire if / when ready
+	}
+}
+
 ATank * ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
