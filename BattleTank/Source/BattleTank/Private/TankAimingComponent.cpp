@@ -2,6 +2,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -34,8 +35,6 @@ void UTankAimingComponent::Aim(FVector AimLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
 
-	auto OwningTank = GetOwner()->GetName();
-
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
@@ -43,16 +42,17 @@ void UTankAimingComponent::Aim(FVector AimLocation, float LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 
+		auto Time = GetWorld()->GetTimeSeconds();
+		auto OwningTank = GetOwner()->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("%f: %s: aim solution found"), Time, *OwningTank)
 		MoveBarrelTowards(AimLocation);
-		
-		// Find Turret mesh
-		// Rotate turret azimuth
-
-		
-
-		
 	}
-
+	else
+	{
+		auto Time = GetWorld()->GetTimeSeconds();
+		auto OwningTank = GetOwner()->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("%f: %s: NO aim solution found!"), Time, *OwningTank)
+	}
 }
 
 void UTankAimingComponent::SetBarrel(UTankBarrel * BarrelToSet)
