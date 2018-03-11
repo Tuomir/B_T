@@ -24,8 +24,6 @@ void ATankPlayerController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	AimTowardsCrossHair();
-
-	//UE_LOG(LogTemp, Warning, TEXT("Player controller says: Tick!"))
 }
 
 ATank * ATankPlayerController::GetControlledTank() const
