@@ -2,6 +2,7 @@
 
 
 #include "TankPlayerController.h"
+#include "Public/Tank.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 
 void ATankPlayerController::BeginPlay()
@@ -83,7 +84,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	else
 	{
 		HitLocation = FVector(0.0f);
-		return true;
+		return false;
 	}
 }
 
