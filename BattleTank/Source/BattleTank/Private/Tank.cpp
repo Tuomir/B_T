@@ -3,6 +3,7 @@
 #include "Tank.h"
 #include "TankAimingComponent.h"
 
+
 // Sets default values
 ATank::ATank()
 {
@@ -15,16 +16,17 @@ ATank::ATank()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	auto TankName = GetName();
-
-	// UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s"), *TankName, *HitLocation.ToString())
-
-		TankAimingComponent->Aim(HitLocation, LaunchSpeed);
+	TankAimingComponent->Aim(HitLocation, LaunchSpeed);
 }
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	TankAimingComponent->SetBarrel(BarrelToSet);
+}
+
+void ATank::SetTurretReference(UTankTurret * TurretToSet)
+{
+	TankAimingComponent->SetTurret(TurretToSet);
 }
 
 // Called when the game starts or when spawned
