@@ -38,15 +38,16 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Player Tank firing!"))
-
 	if (!Barrel) { return; }
 
 	auto SpawnLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	auto SpawnRotation = Barrel->GetSocketRotation(FName("Projectile"));
 
 	// Spawn a projectile from the end of the barrel
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint, SpawnLocation, SpawnRotation);
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint, SpawnLocation, SpawnRotation);
+
+	// Launch projectile
+	Projectile->LaunchProjectile(LaunchSpeed);
 }
 
 // Called when the game starts or when spawned
