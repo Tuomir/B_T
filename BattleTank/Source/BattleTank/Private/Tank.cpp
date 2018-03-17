@@ -38,16 +38,21 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 
 void ATank::Fire()
 {
-	if (!Barrel) { return; }
+	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	auto SpawnLocation = Barrel->GetSocketLocation(FName("Projectile"));
-	auto SpawnRotation = Barrel->GetSocketRotation(FName("Projectile"));
+	if (Barrel && bIsReloaded)
+	{
+		auto SpawnLocation = Barrel->GetSocketLocation(FName("Projectile"));
+		auto SpawnRotation = Barrel->GetSocketRotation(FName("Projectile"));
 
-	// Spawn a projectile from the end of the barrel
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint, SpawnLocation, SpawnRotation);
+		// Spawn a projectile from the end of the barrel
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint, SpawnLocation, SpawnRotation);
 
-	// Launch projectile
-	Projectile->LaunchProjectile(LaunchSpeed);
+		// Launch projectile
+		Projectile->LaunchProjectile(LaunchSpeed);
+
+		LastFireTime = FPlatformTime::Seconds();
+	}	
 }
 
 // Called when the game starts or when spawned
