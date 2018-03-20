@@ -5,7 +5,7 @@
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Player Tank throttle value: %f"), Throttle)
+	
 
 	// TODO clamp throttle value
 	auto ForceApplied = GetForwardVector() * Throttle  * TrackMaxDrivingForce;

@@ -5,6 +5,7 @@
 #include "TankBarrel.h"
 #include "Projectile.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 
 
 // Sets default values
@@ -15,6 +16,7 @@ ATank::ATank()
 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming component"));
 
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement component"));
 }
 
 void ATank::AimAt(FVector HitLocation)
@@ -46,12 +48,19 @@ void ATank::Fire()
 		auto SpawnRotation = Barrel->GetSocketRotation(FName("Projectile"));
 
 		// Spawn a projectile from the end of the barrel
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint, SpawnLocation, SpawnRotation);
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint, SpawnLocation, SpawnRotation);
 
-		// Launch projectile
-		Projectile->LaunchProjectile(LaunchSpeed);
+		if (!Projectile)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("No projectile spawned!"))
+		}
+		else
+		{
+			// Launch projectile
+			Projectile->LaunchProjectile(LaunchSpeed);
 
-		LastFireTime = FPlatformTime::Seconds();
+			LastFireTime = FPlatformTime::Seconds();
+		}
 	}	
 }
 
