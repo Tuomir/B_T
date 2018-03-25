@@ -18,7 +18,7 @@ void ATankAIController::Tick(float DeltaTime)
 	{
 		// move towards player tank
 		auto Goal = Cast<ATank>(PlayerTank);
-		MoveToActor(Goal);
+		MoveToActor(Goal, AcceptanceRadius);
 
 		// Aim at location of player tank
 		auto AimLocation = Cast<ATank>(PlayerTank)->GetActorLocation();
@@ -26,6 +26,10 @@ void ATankAIController::Tick(float DeltaTime)
 
 		// TODO fire if / when ready
 		ControlledTank->Fire();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No player tank found for AI controller!"))
 	}
 }
 

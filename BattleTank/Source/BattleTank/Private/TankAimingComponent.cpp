@@ -48,24 +48,13 @@ void UTankAimingComponent::Aim(FVector AimLocation, float LaunchSpeed)
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 
 		MoveBarrelTowards(AimDirection);
-	}
-	//else
-	//{
-	//	auto Time = GetWorld()->GetTimeSeconds();
-	//	auto OwningTank = GetOwner()->GetName();
-	//	UE_LOG(LogTemp, Warning, TEXT("%f: %s: NO aim solution found!"), Time, *OwningTank)
-	//}
+		FiringStatus = EFiringStatus::Aiming;
+	}	
 }
 
-void UTankAimingComponent::SetBarrel(UTankBarrel * BarrelToSet)
+void UTankAimingComponent::Initialize(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
 {
-	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurret(UTankTurret * TurretToSet)
-{
-	if (!TurretToSet) { return; }
 	Turret = TurretToSet;
 }
 

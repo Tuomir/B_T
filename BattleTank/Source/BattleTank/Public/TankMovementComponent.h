@@ -25,8 +25,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
+
+
 	
 private:
+	// Called by AI controller
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
