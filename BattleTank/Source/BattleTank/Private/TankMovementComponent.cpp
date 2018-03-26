@@ -27,7 +27,8 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack)) { return; }
+	if (!ensure(RightTrack)) { return; }
 
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
@@ -35,11 +36,10 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack)) { return; }
+	if (!ensure(RightTrack)) { return; }
 
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
-
-	// TODO prevent double speed from double input
 }
 
