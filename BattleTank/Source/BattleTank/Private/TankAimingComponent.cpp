@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "TankTurret.h"
 #include "TankBarrel.h"
+#include "Projectile.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -22,13 +23,9 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	
-	// Work out difference betwwen current turret rotation and AimDirection (This is actually redundant as it gives the same result as DeltaRotator)
-	auto TurretRotator = Turret->GetForwardVector().Rotation();
-	auto DeltaTurretRotator = AimAsRotator - TurretRotator;
 
 	// Rotate turret
-	Turret->Rotate(DeltaTurretRotator.Yaw);
+	Turret->Rotate(DeltaRotator.Yaw);
 
 	// Elevate barrel
 	Barrel->Elevate(DeltaRotator.Pitch);
@@ -49,6 +46,29 @@ void UTankAimingComponent::Aim(FVector AimLocation)
 
 		MoveBarrelTowards(AimDirection);
 	}	
+}
+
+void UTankAimingComponent::Fire()
+{
+	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (!ensure(Barrel)) { return; }
+
+	if (bIsReloaded)
+	{
+		auto SpawnLocation = Barrel->GetSocketLocation(FName("Projectile"));
+		auto SpawnRotation = Barrel->GetSocketRotation(FName("Projectile"));
+
+		// Spawn a projectile from the end of the barrel
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint, SpawnLocation, SpawnRotation);
+
+		if (!ensure(Projectile)) { return; }
+
+		// Launch projectile
+		Projectile->LaunchProjectile(LaunchSpeed);
+
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }
 
 void UTankAimingComponent::Initialize(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
