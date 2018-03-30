@@ -35,7 +35,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 }
 
-void UTankAimingComponent::Aim(FVector AimLocation, float LaunchSpeed)
+void UTankAimingComponent::Aim(FVector AimLocation)
 {
 	if (!ensure(Barrel)) { return; }
 	if (!ensure(Turret)) { return; }
@@ -48,7 +48,6 @@ void UTankAimingComponent::Aim(FVector AimLocation, float LaunchSpeed)
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 
 		MoveBarrelTowards(AimDirection);
-		FiringStatus = EFiringStatus::Aiming;
 	}	
 }
 

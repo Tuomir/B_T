@@ -6,8 +6,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
-
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
@@ -21,6 +19,6 @@ public:
 	
 private:
 
-	// How close the AI tank can get to player
+	// How close AI tanks can get to player
 	float AcceptanceRadius = 3000.f;
 };

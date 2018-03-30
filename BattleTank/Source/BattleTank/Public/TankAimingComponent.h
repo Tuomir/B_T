@@ -27,7 +27,7 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void Aim(FVector AimLocation, float LaunchSpeed);
+	void Aim(FVector AimLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
@@ -37,6 +37,9 @@ protected:
 	EFiringStatus FiringStatus = EFiringStatus::Locked;
 
 private:
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 4000;
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
