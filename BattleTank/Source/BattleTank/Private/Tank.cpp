@@ -16,6 +16,17 @@ ATank::ATank()
 	UE_LOG(LogTemp, Warning, TEXT("Rakennus: %s C++ Tank constructor called"), *GetName())
 }
 
+// Called when the game starts or when spawned
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("Rakennus: Tank BeginPlay() called"))
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	Barrel = FindComponentByClass<UTankBarrel>();
+}
+
 void ATank::AimAt(FVector HitLocation)
 {
 	if (!ensure(TankAimingComponent)) { return; }
@@ -44,12 +55,4 @@ void ATank::Fire()
 
 		LastFireTime = FPlatformTime::Seconds();
 	}	
-}
-
-// Called when the game starts or when spawned
-void ATank::BeginPlay()
-{
-	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("Rakennus: Tank BeginPlay() called"))
 }
