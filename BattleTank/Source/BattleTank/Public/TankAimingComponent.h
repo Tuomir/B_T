@@ -36,9 +36,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
+	
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = Setup)
 	EFiringStatus FiringStatus = EFiringStatus::Locked;
+
+	
 
 private:
 
@@ -54,6 +58,10 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBluePrint;
+
+	virtual void BeginPlay() override;
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
 	void MoveBarrelTowards(FVector AimDirection);
 };
