@@ -16,10 +16,14 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 	
 public:
 
+	UTankTrack();
+
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void SetThrottle(float Throttle);
 	
 private:
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
 	// Max force per track in Newtons
 	UPROPERTY(EditDefaultsOnly, Category = Setup)

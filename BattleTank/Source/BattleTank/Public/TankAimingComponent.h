@@ -42,8 +42,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = Setup)
 	EFiringStatus FiringStatus = EFiringStatus::Locked;
 
-	
-
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
