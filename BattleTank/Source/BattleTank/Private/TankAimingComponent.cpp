@@ -25,8 +25,15 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
-	// Rotate turret
-	Turret->Rotate(DeltaRotator.Yaw);
+	// Rotate turret making sure shortest route is taken
+	if (DeltaRotator.Yaw > 180)
+	{
+		Turret->Rotate(DeltaRotator.Yaw - 360);
+	}
+	else
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
 
 	// Elevate barrel
 	Barrel->Elevate(DeltaRotator.Pitch);
