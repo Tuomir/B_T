@@ -32,7 +32,6 @@ void ATankPlayerController::AimTowardsCrossHair()
 
 	FVector OutHitLocation; // Out parameter
 	bool bGotHitLocation = GetSightRayHitLocation(OutHitLocation);
-	UE_LOG(LogTemp, Warning, TEXT("Player has aim solution: %i"), bGotHitLocation)
 
 	if (bGotHitLocation) // Side effect: line tracing
 	{
