@@ -64,7 +64,7 @@ void UTankAimingComponent::Fire()
 {
 	if (!ensure(Barrel)) { return; }
 
-	if (FiringStatus != EFiringStatus::Reloading)
+	if (FiringStatus != EFiringStatus::Reloading && FiringStatus != EFiringStatus::OutOfAmmo)
 	{
 		auto SpawnLocation = Barrel->GetSocketLocation(FName("Projectile"));
 		auto SpawnRotation = Barrel->GetSocketRotation(FName("Projectile"));
@@ -78,6 +78,7 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 
 		LastFireTime = FPlatformTime::Seconds();
+		AmmoCount--;
 	}
 }
 
@@ -104,17 +105,24 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (AmmoCount == 0)
 	{
-		FiringStatus = EFiringStatus::Reloading;
-	}
-	else if (BarrelIsMoving())
-	{
-		FiringStatus = EFiringStatus::Aiming;
+		FiringStatus = EFiringStatus::OutOfAmmo;
 	}
 	else
 	{
-		FiringStatus = EFiringStatus::Locked;
+		if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+		{
+			FiringStatus = EFiringStatus::Reloading;
+		}
+		else if (BarrelIsMoving())
+		{
+			FiringStatus = EFiringStatus::Aiming;
+		}
+		else
+		{
+			FiringStatus = EFiringStatus::Locked;
+		}
 	}
 }
 
