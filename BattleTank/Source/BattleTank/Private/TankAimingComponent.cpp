@@ -44,6 +44,11 @@ bool UTankAimingComponent::BarrelIsMoving()
 	return !AimDirection.Equals(Barrel->GetForwardVector().GetSafeNormal(), 0.01f);
 }
 
+int32 UTankAimingComponent::GetAmmoCount() const
+{
+	return AmmoCount;
+}
+
 void UTankAimingComponent::Aim(FVector AimLocation)
 {
 	if (!ensure(Barrel)) { return; }

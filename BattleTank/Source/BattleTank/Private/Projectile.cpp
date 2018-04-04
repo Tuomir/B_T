@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Projectile.h"
+#include "Components/StaticMeshComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 
@@ -11,8 +13,14 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
-
 	ProjectileMovementComponent->bAutoActivate = false;
+
+	CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Mesh"));
+	SetRootComponent(CollisionMesh);
+	CollisionMesh->SetNotifyRigidBodyCollision(true);
+
+	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
+	LaunchBlast->AttachTo(RootComponent);
 }
 
 // Called when the game starts or when spawned

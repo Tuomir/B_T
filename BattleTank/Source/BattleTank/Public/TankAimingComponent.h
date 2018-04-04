@@ -29,6 +29,9 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetAmmoCount() const;
+
 	void Aim(FVector AimLocation);
 
 	UFUNCTION(BlueprintCallable)
@@ -43,25 +46,26 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = Setup)
 	EFiringStatus FiringStatus = EFiringStatus::Locked;
 
-	UPROPERTY(BlueprintReadOnly, Category = Setup)
-	int32 AmmoCount = 5;
-
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 4000;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	int32 AmmoCount = 5;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 3.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBluePrint;
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 
 	FVector AimDirection;
 
-	float ReloadTimeInSeconds = 3.f;
-
 	double LastFireTime = 0;
-
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
-	TSubclassOf<AProjectile> ProjectileBluePrint;
 
 	virtual void BeginPlay() override;
 
