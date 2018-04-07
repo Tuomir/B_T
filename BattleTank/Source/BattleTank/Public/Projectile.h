@@ -27,15 +27,19 @@ protected:
 
 private:
 
+	UFUNCTION()
+	void OnHit(AActor* ThisActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+
 	UPROPERTY(VisibleAnywhere, Category = Setup)
 	UStaticMeshComponent* CollisionMesh = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = Setup)
 	UParticleSystemComponent* LaunchBlast = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category = Setup)
+	UParticleSystemComponent* ImpactBlast = nullptr;
+
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	void LaunchProjectile(float Speed);
 	
