@@ -31,17 +31,22 @@ private:
 	UFUNCTION()
 	void OnHit(AActor* ThisActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
 
-	UPROPERTY(VisibleAnywhere, Category = Setup)
+	void OnTimerExpire();
+
+	UPROPERTY(VisibleAnywhere, Category = Components)
 	UStaticMeshComponent* CollisionMesh = nullptr;
 
-	UPROPERTY(VisibleAnywhere, Category = Setup)
+	UPROPERTY(VisibleAnywhere, Category = Components)
 	UParticleSystemComponent* LaunchBlast = nullptr;
 
-	UPROPERTY(VisibleAnywhere, Category = Setup)
+	UPROPERTY(VisibleAnywhere, Category = Components)
 	UParticleSystemComponent* ImpactBlast = nullptr;
 
-	UPROPERTY(VisibleAnywhere, Category = Setup)
+	UPROPERTY(VisibleAnywhere, Category = Components)
 	URadialForceComponent* ExplosionForce = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float DestroyDelay = 5.f;
 
 public:	
 
