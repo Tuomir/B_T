@@ -48,6 +48,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float DestroyDelay = 5.f;
 
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float BaseDamage = 20.f;
+
 public:	
 
 	void LaunchProjectile(float Speed);

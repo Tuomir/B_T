@@ -6,6 +6,7 @@
 #include "PhysicsEngine/RadialForceComponent.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 
@@ -47,6 +48,8 @@ void AProjectile::OnHit(AActor * ThisActor, AActor * OtherActor, FVector NormalI
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+
+	UGameplayStatics::ApplyRadialDamage(this, BaseDamage, GetActorLocation(), ExplosionForce->Radius, UDamageType::StaticClass(), TArray<AActor*>());
 
 	CollisionMesh->DestroyComponent();
 
