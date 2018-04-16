@@ -23,6 +23,10 @@ public:
 		AActor * DamageCauser
 	) override;
 
+	// Returns a float between 0 and 1
+	UFUNCTION(BlueprintPure, Category = Health)
+	float GetHealthPercentage() const;
+
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
