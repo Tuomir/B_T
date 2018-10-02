@@ -20,8 +20,13 @@ void ATankAIController::Tick(float DeltaTime)
 	auto Goal = PlayerTank;
 	MoveToActor(Goal, AcceptanceRadius);
 
+	if (!PlayerTank) { return; }
+
 	// Aim at location of player tank
 	auto AimLocation = PlayerTank->GetActorLocation();
+
+	AimLocation.Z += 150.f;
+
 	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 	AimingComponent->Aim(AimLocation);
 
@@ -33,7 +38,8 @@ void ATankAIController::Tick(float DeltaTime)
 
 void ATankAIController::OnPosessedTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Enemy tank dead!"))
+	if (!GetPawn()) { return; }
+	GetPawn()->DetachFromControllerPendingDestroy();
 }
 
 void ATankAIController::SetPawn(APawn * InPawn)

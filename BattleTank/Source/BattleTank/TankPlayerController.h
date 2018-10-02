@@ -19,6 +19,9 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void OnPosessedTankDeath();
+
 protected:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = Setup)
@@ -33,6 +36,8 @@ private:
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const;
 
 	bool GetLookVectorHitLocation(FVector LookDirection ,FVector& HitLocation) const;
+
+	virtual void SetPawn(APawn* InPawn) override;
 
 	UPROPERTY(EditAnyWhere)
 	float CrossHairXLocation = 0.5f;
